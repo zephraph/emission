@@ -105,6 +105,9 @@ export class Home extends React.Component<Props, State> {
             case "hero_units":
               return <HeroUnits hero_units={data} />
             case "artwork":
+              console.log("Artwork")
+              console.log(registerModule)
+              console.log(data)
               return <ArtworkRail ref={registerModule} key={data.__id} rail={data} />
             case "artist":
               return <ArtistRail ref={registerModule} key={data.__id} rail={data} />

@@ -28,7 +28,7 @@ interface State {
   loadFailed: boolean
 }
 
-class ArtistRail extends React.Component<Props, State> {
+export class ArtistRail extends React.Component<Props, State> {
   constructor(props) {
     super(props)
     this.state = {
