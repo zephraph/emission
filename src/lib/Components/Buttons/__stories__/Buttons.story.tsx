@@ -1,4 +1,4 @@
-import { action, storiesOf } from "@storybook/react-native"
+import { storiesOf } from "@storybook/react-native"
 import * as React from "react"
 import { View } from "react-native"
 
@@ -18,18 +18,18 @@ storiesOf("Artsy Buttons")
   .add("Flat White", () => {
     return [
       <FlatWhite text="Default" style={smallButton} />,
-      <FlatWhite text="Clickable" style={smallButton} onPress={action("Pressed")} />,
+      <FlatWhite text="Clickable" style={smallButton} onPress={() => ""} />,
     ]
   })
   .add("Inverted Button", () => {
     return [
-      <View style={largeButton}>
+      <View style={largeButton} key="1">
         <InvertedButton text="Default" />
       </View>,
-      <View style={largeButton}>
-        <InvertedButton text="Clickable" onPress={action("Pressed")} />
+      <View style={largeButton} key="2">
+        <InvertedButton text="Clickable" onPress={() => ""} />
       </View>,
-      <View style={largeButton}>
+      <View style={largeButton} key="3">
         <InvertedButton text="In Progress..." inProgress={true} />
       </View>,
     ]
