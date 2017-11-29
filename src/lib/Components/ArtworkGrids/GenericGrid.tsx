@@ -6,9 +6,9 @@ import { LayoutChangeEvent, StyleSheet, View, ViewStyle } from "react-native"
 import Artwork from "./Artwork"
 
 interface Props extends RelayProps {
-  sectionDirection: "column" // FIXME: We don’t actually support more options atm
-  sectionMargin: number
-  itemMargin: number
+  sectionDirection?: "column" // FIXME: We don’t actually support more options atm
+  sectionMargin?: number
+  itemMargin?: number
 }
 
 interface State {
@@ -16,7 +16,7 @@ interface State {
   sectionCount: number
 }
 
-class GenericArtworksGrid extends React.Component<Props, State> {
+export class GenericArtworksGrid extends React.Component<Props, State> {
   static defaultProps = {
     sectionDirection: "column",
     sectionMargin: 20,

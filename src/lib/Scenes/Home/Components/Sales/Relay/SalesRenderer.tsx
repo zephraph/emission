@@ -23,7 +23,7 @@ const SalesRenderer: React.SFC<any> = ({ render }) => {
               total
             }
             hits {
-              ...LotsByFollowedArtists_lot
+              ...Sales_lots @relay(mask: false)
             }
           }
         }

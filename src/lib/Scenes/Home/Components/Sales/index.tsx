@@ -6,6 +6,9 @@ import styled from "styled-components/native"
 
 import fonts from "lib/data/fonts"
 import Switchboard from "lib/NativeModules/SwitchBoard"
+
+import { GenericArtworksGrid } from "lib/Components/ArtworkGrids/GenericGrid"
+import LotsByFollowedArtists from "./Components/LotsByFollowedArtists"
 import SaleItem from "./Components/SaleItem"
 
 const Container = styled.View`
@@ -30,6 +33,7 @@ interface Props {
   sales: Array<{
     live_start_at: string | null
   }>
+  lots: any
 }
 
 class Sales extends React.Component<Props, null> {
@@ -58,11 +62,17 @@ class Sales extends React.Component<Props, null> {
     )
   }
 
+  renderLots(itemData) {
+    const artworks: any = itemData.data.map(item => item.artwork)
+    return <GenericArtworksGrid artworks={artworks} />
+  }
+
   render() {
-    // console.log(this.props) // FIXME
     const sales = this.props.sales
     const liveAuctions = sales.filter(a => !!a.live_start_at)
     const timedAuctions = sales.filter(a => !a.live_start_at)
+    const lots = this.props.lots.hits
+
     const sections = [
       {
         data: [
@@ -70,6 +80,7 @@ class Sales extends React.Component<Props, null> {
             data: liveAuctions,
           },
         ],
+        id: "live-auctions",
         title: "Current Live Auctions",
       },
       {
@@ -78,7 +89,17 @@ class Sales extends React.Component<Props, null> {
             data: timedAuctions,
           },
         ],
+        id: "timed-auctions",
         title: "Current Timed Auctions",
+      },
+      {
+        data: [
+          {
+            data: lots,
+          },
+        ],
+        id: "followed-artists",
+        title: "Lots By Artists You Follow",
       },
     ]
 
@@ -92,7 +113,10 @@ class Sales extends React.Component<Props, null> {
         stickySectionHeadersEnabled={false}
         sections={sections}
         keyExtractor={(item, index) => item.id}
-        renderItem={itemData => {
+        renderItem={(itemData: any) => {
+          if (itemData.section.id === "followed-artists") {
+            return this.renderLots(itemData.item)
+          }
           return this.renderList(itemData.item)
         }}
         renderSectionHeader={({ section }) =>
@@ -112,6 +136,17 @@ export default createFragmentContainer(Sales, {
       ...SaleItem_sale
       live_start_at
       href
+    }
+  `,
+  lots: graphql`
+    fragment Sales_lots on SaleArtwork {
+      artwork {
+        __id
+        image {
+          aspect_ratio
+        }
+        ...Artwork_artwork @relay(mask: false)
+      }
     }
   `,
 })
