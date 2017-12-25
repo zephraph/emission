@@ -25,10 +25,10 @@ console.error = (message?: any) => {
   }
 }
 
-jest.mock("./lib/metaphysics.ts")
+jest.mock("./lib/metaphysics")
 jest.mock("react-tracking")
 
-jest.mock("./lib/NativeModules/NotificationsManager.tsx", () => ({
+jest.mock("./lib/NativeModules/NotificationsManager", () => ({
   NotificationsManager: {
     addListener: jest.fn(),
   },
@@ -38,16 +38,16 @@ function mockedModule(path: string, mockModuleName: string) {
   jest.mock(path, () => mockModuleName)
 }
 
-mockedModule("./lib/Components/SwitchView.tsx", "SwitchView")
-mockedModule("./lib/Components/Spinner.tsx", "ARSpinner")
-mockedModule("./lib/Components/OpaqueImageView.tsx", "AROpaqueImageView")
-mockedModule("./lib/Components/ArtworkGrids/InfiniteScrollGrid.tsx", "ArtworksGrid")
+mockedModule("./lib/Components/SwitchView", "SwitchView")
+mockedModule("./lib/Components/Spinner", "ARSpinner")
+mockedModule("./lib/Components/OpaqueImageView", "AROpaqueImageView")
+mockedModule("./lib/Components/ArtworkGrids/InfiniteScrollGrid", "ArtworksGrid")
 
 // Artist tests
-mockedModule("./lib/Components/Artist/Shows/index.tsx", "Shows")
-mockedModule("./lib/Components/Artist/Artworks/index.tsx", "Artworks")
-mockedModule("./lib/Components/Artist/Header.tsx", "Header")
-mockedModule("./lib/Components/Artist/About.tsx", "About")
+mockedModule("./lib/Components/Artist/Shows/index", "Shows")
+mockedModule("./lib/Components/Artist/Artworks/index", "Artworks")
+mockedModule("./lib/Components/Artist/Header", "Header")
+mockedModule("./lib/Components/Artist/About", "About")
 
 // Gene tests
-mockedModule("./lib/Components/Gene/Header.tsx", "Header")
+mockedModule("./lib/Components/Gene/Header", "Header")
