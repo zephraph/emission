@@ -10,6 +10,7 @@ module.exports = wallaby => ({
     "src/**/*.diff",
     "!src/**/*-tests.ts?(x)",
   ],
+
   tests: ["src/**/*-tests.ts?(x)"],
 
   preprocessors: {
