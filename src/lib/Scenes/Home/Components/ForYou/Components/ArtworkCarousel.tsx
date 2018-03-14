@@ -2,6 +2,8 @@ import { omit } from "lodash"
 import React, { Component } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 
+import { diff } from "deep-diff"
+
 import {
   Dimensions,
   Image,
@@ -83,6 +85,22 @@ export class ArtworkCarousel extends Component<Props, State> {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const difference = diff(nextProps, this.props)
+    console.log("DIFFERENCE", difference)
+    if (nextProps === this.props) {
+      // console.log("THEY ARE THE SAME")
+    } else {
+      // console.log("THEY ARE THE DIFFERENT")
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // console.log("should update??", nextProps.rail.results ? "RESULTS" : "NO RESULTS")
+    // console.log("should update state OLD", this.state)
+    // console.log("should update state NEW", nextState)
+    return nextProps.rail.results ? true : false
+  }
   expand = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     this.setState({ expanded: true })
@@ -145,6 +163,7 @@ export class ArtworkCarousel extends Component<Props, State> {
   }
 
   onGridLayout(event) {
+    // console.log("hellooo")
     const { height } = event.nativeEvent.layout
     // Non-expandable rails require a non-zero height for an initial render pass,
     // So that we can rely on their subsequent, accurate calls to this function.
@@ -267,6 +286,7 @@ export class ArtworkCarousel extends Component<Props, State> {
   }
 
   render() {
+    console.log("RENDER")
     if (this.state.loadFailed) {
       return null
     }
